@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pro Education</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav>
+    <h1>Pro Education</h1>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#subjects">Subjects</a>
+      <a href="#tips">Study Tips</a>
+      <a href="#exams">Exam Guide</a>
+      <a href="#account">Account</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h2>Welcome to Pro Education</h2>
+    <p>Learn smarter, not harder. We help you understand science, prepare for exams, and stay motivated every day.</p>
+    <button>Start Learning</button>
+    <button>Explore Resources</button>
+  </section>
+
+  <section id="account" class="info">
+    <h3>Your Account Details</h3>
+    <p><strong>Username:</strong> smartlearner2025</p>
+    <p><strong>Email:</strong> learner@example.com</p>
+    <p><strong>Joined:</strong> April 2025</p>
+  </section>
+
+  <section class="study-goals">
+    <h3>Daily Study Goals</h3>
+    <p>Make a plan for your day. Try to study 2-3 subjects, revise what you learned, and solve some practice questions. Don’t forget to take short breaks to relax your brain.</p>
+  </section>
+
+  <section id="subjects" class="subjects">
+    <h3>Subjects We Cover</h3>
+    <p><strong>Science:</strong> From atoms to the universe, we cover physics, chemistry and biology in a simple way.</p>
+    <p><strong>Math:</strong> Clear explanations with examples and quizzes to make math easy and fun.</p>
+    <p><strong>English:</strong> Learn grammar, writing skills and literature with easy notes and fun tips.</p>
+    <p><strong>Social Science:</strong> History, Civics and Geography with timelines, maps and easy answers.</p>
+  </section>
+
+  <section id="tips" class="exam-tips">
+    <h3>Study Tips That Work</h3>
+    <p>1. Use short notes and flashcards.  
+    2. Study in small blocks of time like 25 mins focus + 5 mins break.  
+    3. Explain topics to yourself or your friends — it helps you remember better.  
+    4. Stay away from distractions while studying.</p>
+  </section>
+
+  <section id="exams" class="updates">
+    <h3>Exam Preparation Guide</h3>
+    <p>Start your revision at least 2 weeks before exams. Solve previous year papers. Focus on important topics first. Don’t panic — take it one step at a time. We also provide quick revision charts and sample questions to help you prepare easily.</p>
+  </section>
+
+  <section class="resources">
+    <h3>Resources and Downloads</h3>
+    <p>We offer free downloadable PDFs for Class 6–10 Science notes, summary sheets, practice papers, and exam checklists. Use them for last-minute revision.</p>
+    <button>Download Notes</button>
+    <button>Practice Now</button>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Pro Education. Made with passion for students.</p>
+  </footer>
+
+</body>
+  <section id="thoughts" class="user-thoughts">
+  <h3>User Thoughts</h3>
+  <div id="thought-list"></div>
+</section>
+
+<button id="addBtn">+</button>
+
+<div id="thoughtModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Add Your Thought</h3>
+    <input type="text" id="thoughtHeader" placeholder="Header" />
+    <textarea id="thoughtBody" placeholder="Your thought here..."></textarea>
+    <button id="saveThought">Save</button>
+  </div>
+</div>
+
+<script>
+  // Modal logic
+  const modal = document.getElementById("thoughtModal");
+  const addBtn = document.getElementById("addBtn");
+  const closeBtn = document.querySelector(".close");
+  const saveBtn = document.getElementById("saveThought");
+  const thoughtList = document.getElementById("thought-list");
+
+  addBtn.onclick = () => modal.style.display = "block";
+  closeBtn.onclick = () => modal.style.display = "none";
+  window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; };
+
+  function loadThoughts() {
+    const saved = JSON.parse(localStorage.getItem("userThoughts") || "[]");
+    thoughtList.innerHTML = "";
+    saved.forEach(t => {
+      const div = document.createElement("div");
+      div.className = "thought";
+      div.innerHTML = `<h4>${t.header}</h4><p>${t.body}</p>`;
+      thoughtList.appendChild(div);
+    });
+  }
+
+  saveBtn.onclick = () => {
+    const header = document.getElementById("thoughtHeader").value;
+    const body = document.getElementById("thoughtBody").value;
+    if (header && body) {
+      const saved = JSON.parse(localStorage.getItem("userThoughts") || "[]");
+      saved.push({ header, body });
+      localStorage.setItem("userThoughts", JSON.stringify(saved));
+      loadThoughts();
+      modal.style.display = "none";
+      document.getElementById("thoughtHeader").value = "";
+      document.getElementById("thoughtBody").value = "";
+    }
+  };
+
+  loadThoughts();
+</script>
+</html>
